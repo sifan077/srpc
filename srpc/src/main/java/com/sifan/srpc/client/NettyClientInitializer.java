@@ -1,5 +1,6 @@
 package com.sifan.srpc.client;
 
+import com.sifan.srpc.codec.JsonSerializer;
 import com.sifan.srpc.codec.KryoSerializer;
 import com.sifan.srpc.codec.MyDecode;
 import com.sifan.srpc.codec.MyEncode;
@@ -17,9 +18,9 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
         // 使用自定义的编解码器
         pipeline.addLast(new MyDecode());
         // 编码需要传入序列化器，这里是json，还支持ObjectSerializer，也可以自己实现其他的
-//        pipeline.addLast(new MyEncode(new JsonSerializer()));
+        pipeline.addLast(new MyEncode(new JsonSerializer()));
 //        pipeline.addLast(new MyEncode(new HessianSerializer()));
-        pipeline.addLast(new MyEncode(new KryoSerializer()));
+//        pipeline.addLast(new MyEncode(new KryoSerializer()));
         pipeline.addLast(new NettyClientHandler());
     }
 }

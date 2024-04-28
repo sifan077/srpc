@@ -5,6 +5,10 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/sprc-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/srpc/pom.xml" />
+        <option value="$PROJECT_DIR$/srpc-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/srpc-provider/pom.xml" />
       </list>
     </option>
   </component>

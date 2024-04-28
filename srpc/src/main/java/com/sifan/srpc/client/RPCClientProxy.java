@@ -1,7 +1,6 @@
 package com.sifan.srpc.client;
 
 
-
 import com.sifan.srpc.common.RPCRequest;
 import com.sifan.srpc.common.RPCResponse;
 import lombok.AllArgsConstructor;
@@ -26,14 +25,26 @@ public class RPCClientProxy implements InvocationHandler {
                 .methodName(method.getName())
                 .params(args).paramsTypes(paramsTypes).build();
         //数据传输
-//        System.out.println(request);
+        System.out.println(request);
         RPCResponse response = client.sendRequest(request);
         //System.out.println(response);
+        if (response == null) return null;
         return response.getData();
     }
 
-    <T> T getProxy(Class<T> clazz) {
+    public <T> T getProxy(Class<T> clazz) {
         Object o = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this);
+        return (T) o;
+    }
+
+    public <T> T getProxy(Class<T> clazz, String className) {
+        ClassLoader classLoader = clazz.getClassLoader();
+        Object o = null;
+        try {
+            o = Proxy.newProxyInstance(classLoader, new Class[]{classLoader.loadClass(className)}, this);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         return (T) o;
     }
 }

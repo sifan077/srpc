@@ -5,6 +5,7 @@ import com.sifan.srpc.common.RPCResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -16,13 +17,14 @@ import java.util.Map;
  * Object类型也行，强制转型就行
  */
 @AllArgsConstructor
+@NoArgsConstructor
 public class NettyRPCServerHandler extends SimpleChannelInboundHandler<RPCRequest> {
     private ServiceProvider serviceProvider;
 
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RPCRequest msg) throws Exception {
-        //System.out.println(msg);
+        System.out.println("msg="+msg);
         RPCResponse response = getResponse(msg);
         ctx.writeAndFlush(response);
         ctx.close();
@@ -66,6 +68,7 @@ public class NettyRPCServerHandler extends SimpleChannelInboundHandler<RPCReques
                 }
             }
 //            method = service.getClass().getMethod(request.getMethodName(), request.getParamsTypes());
+            System.out.println(method.getName());
             Object invoke = method.invoke(service, request.getParams());
             return RPCResponse.success(invoke);
         } catch (IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e) {

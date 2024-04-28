@@ -9,6 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="springboot-starter-srpc" />
         <module name="srpc" />
+        <module name="srpc-provider" />
+        <module name="srpc-consumer" />
       </profile>
     </annotationProcessing>
   </component>
