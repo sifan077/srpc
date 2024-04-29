@@ -1,8 +1,6 @@
 package com.sifan.boot.starter.bootstrap;
 
 import com.sifan.boot.starter.annotation.RpcReference;
-import com.sifan.srpc.client.NettyRPCClient;
-import com.sifan.srpc.client.RPCClient;
 import com.sifan.srpc.client.RPCClientProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -38,9 +36,9 @@ public class RpcConsumerBootstrap implements BeanPostProcessor {
 //                log.info("interfaceClass:{}", interfaceClass.getTypeName());
 //                log.info("interfaceClass:{}", interfaceClass.getName());
                 // 构建一个使用java Socket/ netty/....传输的客户端
-                RPCClient rpcClient = new NettyRPCClient();
+//                RPCClient rpcClient = new NettyRPCClient();
                 // 把这个客户端传入代理客户端
-                RPCClientProxy rpcClientProxy = new RPCClientProxy(rpcClient);
+                RPCClientProxy rpcClientProxy = new RPCClientProxy(RpcClientFactory.getInstance());
                 // 我不想要创建代理对象，直接创建代理对象
 //                Object proxyObject = rpcClientProxy.getProxy(interfaceClass);
 //                log.info("代理对象：{}", proxyObject);

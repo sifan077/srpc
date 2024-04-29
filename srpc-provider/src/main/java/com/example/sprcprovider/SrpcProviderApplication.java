@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableRpc(needServer = true)
+@EnableRpc(needServer = true, port = 9999)
 public class SrpcProviderApplication {
 
     public static void main(String[] args) {

@@ -21,4 +21,8 @@ public @interface EnableRpc {
      * @return
      */
     boolean needServer() default true;
+
+    int port() default 8888;
+
+    String host() default "127.0.0.1";
 }
