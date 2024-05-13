@@ -3,6 +3,7 @@ package com.sifan.srpc.client;
 
 import com.sifan.srpc.common.RPCRequest;
 import com.sifan.srpc.common.RPCResponse;
+import com.sifan.srpc.register.NacosRegister;
 import com.sifan.srpc.register.ServiceRegister;
 import com.sifan.srpc.register.ZkServiceRegister;
 import io.netty.bootstrap.Bootstrap;
@@ -38,7 +39,9 @@ public class NettyRPCClient implements RPCClient {
     private HashMap<String, Channel> channelFutureMap;
 
     public NettyRPCClient() {
-        this.serviceRegister = new ZkServiceRegister();
+//        this.serviceRegister = new ZkServiceRegister();
+        this.serviceRegister = new NacosRegister();
+
         this.channelFutureMap = new HashMap<>();
     }
 
@@ -65,6 +68,7 @@ public class NettyRPCClient implements RPCClient {
      */
     @Override
     public RPCResponse sendRequest(RPCRequest request) {
+
 //        InetSocketAddress address = serviceRegister.serviceDiscovery(request.getInterfaceName());
 //        if (address == null) {
 //            throw new RuntimeException("不存在正在运行的服务");
@@ -90,7 +94,7 @@ public class NettyRPCClient implements RPCClient {
             // 实际上不应通过阻塞，可通过回调函数，后面可以再进行优化
             AttributeKey<RPCResponse> key = AttributeKey.valueOf("RPCResponse");
             RPCResponse response = channel.attr(key).get();
-            System.out.println(response);
+//            System.out.println(response);
             return response;
         } catch (Exception e) {
             e.printStackTrace();

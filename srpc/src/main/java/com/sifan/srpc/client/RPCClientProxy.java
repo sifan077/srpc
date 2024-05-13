@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class RPCClientProxy implements InvocationHandler {
@@ -21,11 +22,15 @@ public class RPCClientProxy implements InvocationHandler {
         for (int i = 0; i < paramsTypes.length; i++) {
             paramsTypes[i] = method.getParameterTypes()[i].getName();
         }
-        RPCRequest request = RPCRequest.builder().interfaceName(method.getDeclaringClass().getName())
+        RPCRequest request = RPCRequest.builder()
+                .interfaceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())
-                .params(args).paramsTypes(paramsTypes).build();
+                .params(args)
+                .paramsTypes(paramsTypes)
+                .requestId(String.valueOf(UUID.randomUUID()))
+                .build();
         //数据传输
-        System.out.println(request);
+//        System.out.println(request);
         RPCResponse response = client.sendRequest(request);
         //System.out.println(response);
         if (response == null) return null;

@@ -1,7 +1,7 @@
 package com.sifan.srpc.server;
 
 
-
+import com.sifan.srpc.register.NacosRegister;
 import com.sifan.srpc.register.ServiceRegister;
 import com.sifan.srpc.register.ZkServiceRegister;
 
@@ -31,7 +31,8 @@ public class ServiceProvider {
         this.host = host;
         this.port = port;
         this.interfaceProvider = new HashMap<>();
-        this.serviceRegister = new ZkServiceRegister();
+//        this.serviceRegister = new ZkServiceRegister();
+        this.serviceRegister = new NacosRegister();
     }
 
     public void provideServiceInterface(Object service) {
@@ -47,5 +48,14 @@ public class ServiceProvider {
 
     public Object getService(String interfaceName) {
         return interfaceProvider.get(interfaceName);
+    }
+
+
+    /**
+     * 获取所有提供的服务，返回一个只读的map
+     */
+    public Map<String, Object> getInterfaceProvider() {
+        Map<String, Object> stringObjectMap = Map.copyOf(this.interfaceProvider);
+        return stringObjectMap;
     }
 }

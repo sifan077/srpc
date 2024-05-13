@@ -31,15 +31,10 @@ public class RpcInitBootstrap implements ImportBeanDefinitionRegistrar {
             });
             serverThread.start();
 
-            // 注册 NettyRPCServer bean
-            registerNettyRPCServerBean(serverThread, registry);
         } else {
             log.info("RPC 客户端启动");
         }
     }
 
-    private void registerNettyRPCServerBean(Thread server, BeanDefinitionRegistry registry) {
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(Thread.class, () -> server);
-        registry.registerBeanDefinition("nettyRPCServer", builder.getBeanDefinition());
-    }
+
 }
