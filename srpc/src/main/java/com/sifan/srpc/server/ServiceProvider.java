@@ -1,10 +1,8 @@
 package com.sifan.srpc.server;
 
 
-import com.sifan.srpc.register.ConsulRegister;
-import com.sifan.srpc.register.NacosRegister;
 import com.sifan.srpc.register.ServiceRegister;
-import com.sifan.srpc.register.ZkServiceRegister;
+import com.sifan.srpc.register.ServiceRegisterFactory;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -34,7 +32,8 @@ public class ServiceProvider {
         this.interfaceProvider = new HashMap<>();
 //        this.serviceRegister = new ZkServiceRegister();
 //        this.serviceRegister = new NacosRegister();
-        this.serviceRegister = new ConsulRegister();
+//        this.serviceRegister = new ConsulRegister();
+        this.serviceRegister = ServiceRegisterFactory.getServiceRegister(ServiceRegisterFactory.NACOS);
     }
 
     public void provideServiceInterface(Object service) {

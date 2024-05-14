@@ -50,7 +50,8 @@ public class ZkServiceRegister implements ServiceRegister {
             // 临时节点，服务器下线就删除节点
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
         } catch (Exception e) {
-            System.out.println("此服务已存在");
+            System.out.println("服务注册失败，请稍后重试");
+            e.printStackTrace();
         }
     }
 

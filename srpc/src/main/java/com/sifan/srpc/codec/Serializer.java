@@ -2,6 +2,12 @@ package com.sifan.srpc.codec;
 
 
 public interface Serializer {
+    public final static int OBJECT_SERIALIZER = 0;
+    public final static int JSON_SERIALIZER = 1;
+    public final static int HESSIAN_SERIALIZER = 2;
+    public final static int KRYO_SERIALIZER = 3;
+    public final static int PROTOSTUFF_SERIALIZER = 4;
+
     // 根据序号取出序列化器，暂时有两种实现方式，需要其它方式，实现这个接口即可
     static Serializer getSerializerByCode(int code) {
         switch (code) {
