@@ -44,8 +44,14 @@ public class NacosRegister implements ServiceRegister {
     public InetSocketAddress serviceDiscovery(String serviceName) {
         try {
             List<Instance> allInstances = namingService.getAllInstances(ROOT_PATH, serviceName);
-            List<String> allHosts = allInstances.stream().map((item) -> item.getIp() + ":" + item.getPort()).collect(Collectors.toList());
-            String ip = loadBalance.balance(allHosts);
+            List<InterfaceItem> interfaceItems = allInstances
+                    .stream()
+                    .map((item) -> InterfaceItem.builder()
+                            .host(item.getIp())
+                            .port(item.getPort())
+                            .weight(item.getWeight())
+                            .build()).collect(Collectors.toList());
+            String ip = loadBalance.balance(interfaceItems);
 
             return new InetSocketAddress(ip.split(":")[0], Integer.parseInt(ip.split(":")[1]));
         } catch (NacosException e) {

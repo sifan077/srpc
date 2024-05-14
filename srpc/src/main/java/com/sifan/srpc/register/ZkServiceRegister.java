@@ -11,6 +11,7 @@ import org.apache.zookeeper.CreateMode;
 
 import java.net.InetSocketAddress;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class ZkServiceRegister implements ServiceRegister {
@@ -57,9 +58,19 @@ public class ZkServiceRegister implements ServiceRegister {
     @Override
     public InetSocketAddress serviceDiscovery(String serviceName) {
         try {
-            List<String> strings = client.getChildren().forPath("/" + serviceName);
+            List<String> ips = client.getChildren().forPath("/" + serviceName);
             // 负载均衡选择器，选择一个
-            String string = loadBalance.balance(strings);
+            List<InterfaceItem> interfaceItems = ips
+                    .stream()
+                    .map((item) -> {
+                        String[] result = item.split(":");
+                        return InterfaceItem.builder()
+                                .interfaceName(serviceName)
+                                .host(result[0])
+                                .port(Integer.parseInt(result[1]))
+                                .build();
+                    }).collect(Collectors.toList());
+            String string = loadBalance.balance(interfaceItems);
             return parseAddress(string);
         } catch (Exception e) {
             e.printStackTrace();

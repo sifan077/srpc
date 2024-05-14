@@ -1,5 +1,7 @@
 package com.sifan.srpc.loadbalance;
 
+import com.sifan.srpc.register.InterfaceItem;
+
 import java.util.List;
 
 /**
@@ -9,9 +11,13 @@ public class RoundLoadBalance implements LoadBalance {
     private int choose = -1;
 
     @Override
-    public String balance(List<String> addressList) {
+    public String balance(List<InterfaceItem> addressList) {
         choose++;
+        if (addressList.size() == 0) {
+            return null;
+        }
         choose = choose % addressList.size();
-        return addressList.get(choose);
+        InterfaceItem interfaceItem = addressList.get(choose);
+        return interfaceItem.getHost() + ":" + interfaceItem.getPort();
     }
 }

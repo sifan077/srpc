@@ -3,6 +3,7 @@ package com.sifan.srpc.client;
 
 import com.sifan.srpc.common.RPCRequest;
 import com.sifan.srpc.common.RPCResponse;
+import com.sifan.srpc.register.ConsulRegister;
 import com.sifan.srpc.register.NacosRegister;
 import com.sifan.srpc.register.ServiceRegister;
 import com.sifan.srpc.register.ZkServiceRegister;
@@ -40,7 +41,8 @@ public class NettyRPCClient implements RPCClient {
 
     public NettyRPCClient() {
 //        this.serviceRegister = new ZkServiceRegister();
-        this.serviceRegister = new NacosRegister();
+//        this.serviceRegister = new NacosRegister();
+        this.serviceRegister = new ConsulRegister();
 
         this.channelFutureMap = new HashMap<>();
     }

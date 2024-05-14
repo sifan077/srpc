@@ -1,6 +1,7 @@
 package com.sifan.srpc.server;
 
 
+import com.sifan.srpc.register.ConsulRegister;
 import com.sifan.srpc.register.NacosRegister;
 import com.sifan.srpc.register.ServiceRegister;
 import com.sifan.srpc.register.ZkServiceRegister;
@@ -32,7 +33,8 @@ public class ServiceProvider {
         this.port = port;
         this.interfaceProvider = new HashMap<>();
 //        this.serviceRegister = new ZkServiceRegister();
-        this.serviceRegister = new NacosRegister();
+//        this.serviceRegister = new NacosRegister();
+        this.serviceRegister = new ConsulRegister();
     }
 
     public void provideServiceInterface(Object service) {
