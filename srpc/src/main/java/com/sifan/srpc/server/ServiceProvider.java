@@ -55,8 +55,8 @@ public class ServiceProvider {
     /**
      * 获取所有提供的服务，返回一个只读的map
      */
-    public Map<String, Object> getInterfaceProvider() {
-        Map<String, Object> stringObjectMap = Map.copyOf(this.interfaceProvider);
-        return stringObjectMap;
-    }
+//    public Map<String, Object> getInterfaceProvider() {
+//        Map<String, Object> stringObjectMap = Map.copyOf(this.interfaceProvider);
+//        return stringObjectMap;
+//    }
 }

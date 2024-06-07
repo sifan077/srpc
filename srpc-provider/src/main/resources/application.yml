@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatis_plus?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: password
+    #  main:
+    # 是否springboot打印信息
+#    banner-mode: off
+# 开启mp的日志(输出到控制台)
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    # 打印mybatis-plus信息
+server:
+  port: 8083
+#    banner: false

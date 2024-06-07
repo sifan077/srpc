@@ -48,18 +48,18 @@ public class NettyRPCClient implements RPCClient {
 
     private Channel getChanel(String interfaceName) {
         InetSocketAddress address = serviceRegister.serviceDiscovery(interfaceName);
-        if (address == null) {
-            throw new RuntimeException("不存在正在运行的服务");
-        }
-        host = address.getHostName();
-        port = address.getPort();
-        try {
-            ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
-            Channel channel = channelFuture.channel();
-            channelFutureMap.put(interfaceName, channel);
-            return channel;
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (address != null) {
+            host = address.getHostName();
+            port = address.getPort();
+            try {
+                ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
+                Channel channel = channelFuture.channel();
+                channelFutureMap.put(interfaceName, channel);
+                return channel;
+            } catch (Exception e) {
+//                e.printStackTrace();
+                address = serviceRegister.serviceDiscovery(interfaceName);
+            }
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class NettyRPCClient implements RPCClient {
 //            Channel channel = channelFuture.channel();
             Channel channel = channelFutureMap.get(request.getInterfaceName());
             // 如果channel为空，或者不活跃，重新获取channel
-            if (channel == null || !channel.isActive()) {
+            if (channel == null || (!channel.isActive() && !channel.isOpen())) {
                 channel = getChanel(request.getInterfaceName());
             }
             if (channel == null) {
