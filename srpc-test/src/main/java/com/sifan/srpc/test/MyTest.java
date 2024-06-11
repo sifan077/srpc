@@ -1,8 +1,8 @@
-package com.sifan.srpc;
+package com.sifan.srpc.test;
 
 import com.alibaba.fastjson2.JSON;
 import com.sifan.srpc.codec.Serializer;
-import com.sifan.srpc.common.User;
+import com.sifan.srpc.test.common.User;
 
 import java.io.File;
 import java.io.FileWriter;

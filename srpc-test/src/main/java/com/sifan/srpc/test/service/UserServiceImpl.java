@@ -1,7 +1,7 @@
-package com.sifan.srpc.service;
+package com.sifan.srpc.test.service;
 
 
-import com.sifan.srpc.common.User;
+import com.sifan.srpc.test.common.User;
 
 public class UserServiceImpl implements UserService {
     @Override

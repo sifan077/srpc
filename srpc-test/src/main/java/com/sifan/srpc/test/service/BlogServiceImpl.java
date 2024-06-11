@@ -1,7 +1,7 @@
-package com.sifan.srpc.service;
+package com.sifan.srpc.test.service;
 
 
-import com.sifan.srpc.common.Blog;
+import com.sifan.srpc.test.common.Blog;
 
 public class BlogServiceImpl implements BlogService {
     @Override

@@ -11,6 +11,7 @@
     <modules>
         <module>srpc</module>
         <module>springboot-starter-srpc</module>
+        <module>srpc-test</module>
     </modules>
 
     <properties>

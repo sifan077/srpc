@@ -1,7 +1,7 @@
-package com.sifan.srpc.service;
+package com.sifan.srpc.test.service;
 
 
-import com.sifan.srpc.common.User;
+import com.sifan.srpc.test.common.User;
 
 public interface UserService {
     // 客户端通过这个接口调用服务端的实现类

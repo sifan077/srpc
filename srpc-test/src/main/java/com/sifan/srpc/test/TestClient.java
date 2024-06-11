@@ -1,9 +1,12 @@
-package com.sifan.srpc.client;
+package com.sifan.srpc.test;
 
-import com.sifan.srpc.common.Blog;
-import com.sifan.srpc.common.User;
-import com.sifan.srpc.service.BlogService;
-import com.sifan.srpc.service.UserService;
+import com.sifan.srpc.client.NettyRPCClient;
+import com.sifan.srpc.client.RPCClient;
+import com.sifan.srpc.client.RPCClientProxy;
+import com.sifan.srpc.test.common.Blog;
+import com.sifan.srpc.test.common.User;
+import com.sifan.srpc.test.service.BlogService;
+import com.sifan.srpc.test.service.UserService;
 
 public class TestClient {
     public static void main(String[] args) {

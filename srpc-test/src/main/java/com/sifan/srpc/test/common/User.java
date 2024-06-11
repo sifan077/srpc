@@ -1,4 +1,4 @@
-package com.sifan.srpc.common;
+package com.sifan.srpc.test.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Blog implements Serializable {
+public class User implements Serializable {
+    // 客户端和服务端共有的，模拟RPC中传输的信息
     private Integer id;
-    private Integer useId;
-    private String title;
+    private String userName;
+    private Boolean sex;
 }
