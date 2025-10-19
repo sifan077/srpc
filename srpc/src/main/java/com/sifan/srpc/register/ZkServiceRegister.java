@@ -1,7 +1,7 @@
 package com.sifan.srpc.register;
 
 import com.sifan.srpc.loadbalance.LoadBalance;
-import com.sifan.srpc.loadbalance.RoundLoadBalance;
+import com.sifan.srpc.loadbalance.LoadBalanceFactory;
 import lombok.Data;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -19,9 +19,8 @@ public class ZkServiceRegister implements ServiceRegister {
     private static final String ROOT_PATH = "MyRPC";
     // curator 提供的zookeeper客户端
     private CuratorFramework client;
-    // 初始化负载均衡器， 这里用的是随机， 一般通过构造函数传入
-//    private LoadBalance loadBalance = new RandomLoadBalance();
-    private LoadBalance loadBalance = new RoundLoadBalance();
+    // 初始化负载均衡器（可通过配置切换，默认轮询）
+    private LoadBalance loadBalance = LoadBalanceFactory.getLoadBalance();
 
     // 这里负责zookeeper客户端的初始化，并与zookeeper服务端建立连接
     public ZkServiceRegister() {

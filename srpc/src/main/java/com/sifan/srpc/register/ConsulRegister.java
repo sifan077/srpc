@@ -8,7 +8,7 @@ import com.orbitz.consul.model.agent.ImmutableRegCheck;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.health.ServiceHealth;
 import com.sifan.srpc.loadbalance.LoadBalance;
-import com.sifan.srpc.loadbalance.RoundLoadBalance;
+import com.sifan.srpc.loadbalance.LoadBalanceFactory;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -19,9 +19,8 @@ public class ConsulRegister implements ServiceRegister {
     private final String ROOT_PATH = "SRPC";
     //  提供的consul客户端
     private Consul consul;
-    // 初始化负载均衡器， 这里用的是随机， 一般通过构造函数传入
-//    private LoadBalance loadBalance = new RandomLoadBalance();
-    private LoadBalance loadBalance = new RoundLoadBalance();
+    // 初始化负载均衡器（可通过配置切换，默认轮询）
+    private LoadBalance loadBalance = LoadBalanceFactory.getLoadBalance();
 
     public ConsulRegister() {
         String addr = System.getProperty("srpc.consul.addr");
