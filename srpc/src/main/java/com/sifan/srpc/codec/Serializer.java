@@ -24,6 +24,38 @@ public interface Serializer {
         }
     }
 
+    // 根据名称获取序列化器（java/object/jdk、json、hessian、kryo）
+    static Serializer getSerializerByName(String name) {
+        if (name == null) return null;
+        String n = name.trim().toLowerCase();
+        if ("java".equals(n) || "object".equals(n) || "jdk".equals(n)) {
+            return new ObjectSerializer();
+        }
+        if ("json".equals(n) || "fastjson".equals(n)) {
+            return new JsonSerializer();
+        }
+        if ("hessian".equals(n)) {
+            return new HessianSerializer();
+        }
+        if ("kryo".equals(n)) {
+            return new KryoSerializer();
+        }
+        return null;
+    }
+
+    // 默认序列化器：优先 JVM 属性 srpc.serializer > 环境变量 SRPC_SERIALIZER > 默认 kryo
+    static Serializer getDefaultSerializer() {
+        String name = System.getProperty("srpc.serializer");
+        if (name == null || name.length() == 0) {
+            name = System.getenv("SRPC_SERIALIZER");
+        }
+        Serializer s = getSerializerByName(name);
+        if (s == null) {
+            s = getSerializerByCode(KRYO_SERIALIZER);
+        }
+        return s;
+    }
+
     // 把对象序列化成字节数组
     byte[] serialize(Object obj);
 

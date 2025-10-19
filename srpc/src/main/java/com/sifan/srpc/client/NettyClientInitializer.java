@@ -14,11 +14,11 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = ch.pipeline();
         // 使用自定义的编解码器
         pipeline.addLast(new MyDecode());
-        // 编码需要传入序列化器，这里是json，还支持ObjectSerializer，也可以自己实现其他的
+        // 编码需要传入序列化器，默认可通过系统属性/环境变量配置（srpc.serializer）
 //        pipeline.addLast(new MyEncode(new JsonSerializer()));
 //        pipeline.addLast(new MyEncode(new HessianSerializer()));
 //        pipeline.addLast(new MyEncode(new KryoSerializer()));
-        pipeline.addLast(new MyEncode(Serializer.getSerializerByCode(Serializer.KRYO_SERIALIZER)));
+        pipeline.addLast(new MyEncode(Serializer.getDefaultSerializer()));
         pipeline.addLast(new NettyClientHandler());
     }
 }
