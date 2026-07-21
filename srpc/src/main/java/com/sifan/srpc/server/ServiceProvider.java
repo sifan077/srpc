@@ -33,7 +33,7 @@ public class ServiceProvider {
 //        this.serviceRegister = new ZkServiceRegister();
 //        this.serviceRegister = new NacosRegister();
 //        this.serviceRegister = new ConsulRegister();
-        this.serviceRegister = ServiceRegisterFactory.getServiceRegister(ServiceRegisterFactory.NACOS);
+        this.serviceRegister = ServiceRegisterFactory.getServiceRegister();
     }
 
     public void provideServiceInterface(Object service) {

@@ -41,7 +41,7 @@ public class NettyRPCClient implements RPCClient {
 //        this.serviceRegister = new ZkServiceRegister();
 //        this.serviceRegister = new NacosRegister();
 //        this.serviceRegister = new ConsulRegister();
-        this.serviceRegister = ServiceRegisterFactory.getServiceRegister(ServiceRegisterFactory.NACOS);
+        this.serviceRegister = ServiceRegisterFactory.getServiceRegister();
 
         this.channelFutureMap = new HashMap<>();
     }

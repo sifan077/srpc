@@ -1,0 +1,12 @@
+com/sifan/srpc/test/service/UserService.class
+com/sifan/srpc/test/common/Blog.class
+com/sifan/srpc/test/TestClient.class
+com/sifan/srpc/test/common/User.class
+com/sifan/srpc/test/TestServer2.class
+com/sifan/srpc/test/MyTest.class
+com/sifan/srpc/test/service/BlogService.class
+com/sifan/srpc/test/common/Blog$BlogBuilder.class
+com/sifan/srpc/test/TestServer.class
+com/sifan/srpc/test/service/UserServiceImpl.class
+com/sifan/srpc/test/service/BlogServiceImpl.class
+com/sifan/srpc/test/common/User$UserBuilder.class

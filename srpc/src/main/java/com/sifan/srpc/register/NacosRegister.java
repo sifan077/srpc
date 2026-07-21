@@ -6,10 +6,8 @@ import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.sifan.srpc.loadbalance.LoadBalance;
-import com.sifan.srpc.loadbalance.RoundLoadBalance;
+import com.sifan.srpc.loadbalance.LoadBalanceFactory;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Properties;
@@ -20,17 +18,25 @@ public class NacosRegister implements ServiceRegister {
     private final String ROOT_PATH = "SRPC";
     //  提供的nacos客户端
     private NamingService namingService;
-    // 初始化负载均衡器， 这里用的是随机， 一般通过构造函数传入
-//    private LoadBalance loadBalance = new RandomLoadBalance();
-    private LoadBalance loadBalance = new RoundLoadBalance();
+    // 初始化负载均衡器（可通过配置切换，默认轮询）
+    private LoadBalance loadBalance = LoadBalanceFactory.getLoadBalance();
 
     public NacosRegister() {
         try {
             Properties properties = new Properties();
-            properties.setProperty(PropertyKeyConst.SERVER_ADDR, "127.0.0.1:8848");
-//            this.namingService = NamingFactory.createNamingService("127.0.0.1:8848");
+            // 读取 Nacos 地址，优先级：JVM 属性 > 环境变量 > 默认
+            String addr = System.getProperty(PropertyKeyConst.SERVER_ADDR);
+            if (addr == null || addr.length() == 0) {
+                addr = System.getProperty("srpc.nacos.addr");
+            }
+            if (addr == null || addr.length() == 0) {
+                addr = System.getenv("SRPC_NACOS_ADDR");
+            }
+            if (addr == null || addr.length() == 0) {
+                addr = "127.0.0.1:8848";
+            }
+            properties.setProperty(PropertyKeyConst.SERVER_ADDR, addr);
             this.namingService = NamingFactory.createNamingService(properties);
-
         } catch (NacosException e) {
             System.out.println("nacos 初始化失败");
             System.exit(1);
@@ -61,7 +67,6 @@ public class NacosRegister implements ServiceRegister {
                             .weight(item.getWeight())
                             .build()).collect(Collectors.toList());
             String ip = loadBalance.balance(interfaceItems);
-
             return new InetSocketAddress(ip.split(":")[0], Integer.parseInt(ip.split(":")[1]));
         } catch (NacosException e) {
             System.out.println("nacos 获取服务失败");
